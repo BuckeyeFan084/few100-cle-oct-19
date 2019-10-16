@@ -46,8 +46,9 @@ describe('variables in type script', () => {
         const age = 22;
 
         if (age > 21) {
-            // tslint:disable-next-line: prefer-const
-            let message = 'old enough!';
+
+            // tslint:disable-next-line: no-var-keyword
+            var message = 'old enough!';
         }
 
         expect(message).toBe('old enough!');
