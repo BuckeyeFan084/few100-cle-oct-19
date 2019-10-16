@@ -1,4 +1,3 @@
-
 import './styles.css';
 import { multiply } from './math';
 
@@ -10,7 +9,7 @@ const multiplyButton = document.getElementById('multiply') as HTMLInputElement;
 const answerEl = document.getElementById('answer') as HTMLSpanElement;
 
 // tslint:disable-next-line: only-arrow-functions
-multiplyButton.addEventListener('click', function () {
+multiplyButton.addEventListener('click', function() {
 
     const n1 = number1El.valueAsNumber;
     const n2 = number1E2.valueAsNumber;
