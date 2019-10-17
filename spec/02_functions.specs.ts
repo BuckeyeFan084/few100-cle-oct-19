@@ -1,3 +1,5 @@
+import { isEven, doubleIt, accumulate } from './utils';
+
 describe('functions', () => {
     it('how to declare them', () => {
         // Two ways:
@@ -157,6 +159,93 @@ describe('functions', () => {
             });
         });
     });
+    describe('array methods', () => {
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // JS has a for while loops, do loops, for loop (e.g. for (let x =0; x<100; x++) {}); and others.. I am showing something else.
+        it('visting each element in an array', () => {
+            numbers.forEach((e, i, c) => console.log({ e, i, c }));
+            numbers.forEach((e) => console.log({ e }));
+        });
+        describe('methods that create a new array', () => {
+            it('map', () => {
+                // const doubled = numbers.map(n => n * 2);
+                const doubled = numbers.map(doubleIt);
+                expect(doubled).toEqual([2, 4, 6, 8, 10, 12, 14, 16, 18]); // this will fail in really dumb way
+
+            });
+            it('filter', () => {
+                // const evens = numbers.filter(n => isEven % 2 === 0);
+                // const evens = numbers.filter(n => isEven(n));
+                const evens = numbers.filter(isEven);
+                expect(evens).toEqual([2, 4, 6, 8]);
+                expect(numbers).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+            });
+        });
+        describe('methods that return a single value', () => {
+            describe('checking the membership', () => {
+                it('seeing if all the members meet the criteria', () => {
+                    const allEven = numbers.every(isEven);
+                    expect(allEven).toBe(false); // some are odd!
+
+                    const someEven = numbers.some(isEven);
+                    expect(someEven).toBe(true); // yes, SOME of the numbers are even
+
+                });
+
+                it('has reduce', () => {
+                    const total = numbers.reduce(accumulate);
+                    expect(total).toBe(45);
+
+                    const total2 = numbers.reduce(accumulate);
+                    expect(total2).toBe(145);
+
+                    const totofDoubledEvens = numbers
+                        .filter(isEven)
+                        .map(doubleIt)
+                        .reduce((s, n) => s + n);
+
+                    expect(totofDoubledEvens).toBe(40);
+                });
+
+                it('practice', () => {
+                    interface CartItem {
+                        name: string;
+                        qty: number;
+                        price: number;
+                    }
+
+                    const cart: CartItem[] = [
+                        { name: 'Eggs', qty: 1, price: 2.99 },
+                        { name: 'Bread', qty: 3, price: 3.50 },
+                        { name: 'Shampoo', qty: 2, price: 7.25 }
+                    ];
+
+                    interface ShippingInfo {
+                        totalQty: number;
+                        totalPrice: number;
+                    }
+
+                    // how would we use reduce to get the shipping info from
+                    // this cart. (the total number of things, the total price.)
+
+                    const initialState: ShippingInfo = {
+                        totalQty: 0,
+                        totalPrice: 0,
+                    };
+                    const answer = cart.reduce((s: ShippingInfo, n: CartItem): ShippingInfo => {
+                        return {
+                            totalQty: s.totalQty + n.qty,
+                            totalPrice: s.totalPrice + (n.qty * n.price)
+                        } as ShippingInfo;
+                    }, initialState);
+
+                    console.log('The Answer is: ', answer);
+                });
+            });
+        });
+
+    });
 });
+})
 
 
